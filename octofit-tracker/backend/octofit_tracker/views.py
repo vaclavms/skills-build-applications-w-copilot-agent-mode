@@ -6,7 +6,11 @@ from .models import User, Team, Activity, Leaderboard, Workout
 
 @api_view(['GET'])
 def api_root(request, format=None):
-    base_url = 'http://127.0.0.1:8000/'
+    base_url = request.build_absolute_uri('/')
+    if 'localhost' in base_url or '127.0.0.1' in base_url:
+        base_url = 'http://127.0.0.1:8000/'
+    else:
+        base_url = 'https://stunning-doodle-7597pw445v53rvv4-8000.app.github.dev/'
     return Response({
         'users': base_url + 'api/users/',
         'teams': base_url + 'api/teams/',
